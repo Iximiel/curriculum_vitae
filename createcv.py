@@ -1,5 +1,4 @@
-from typing import Iterable
-from utils import (
+from cvcompiler import (
     education,
     workExperience,
     create_cv,

@@ -339,13 +339,8 @@ class Languages:
 class Presentation:
     presentation: str
 
-    def __post_init__(self):
-        self.presentation = str(self.presentation)
-        self.presentation = latexify(self.presentation)
-        self.presentation = beautifyCpp(self.presentation)
-
-    def __str__(self) -> str:
-        return self.presentation
+    def __str__(self):
+        return beautifyCpp(latexify(self.presentation))
 
 
 def create_cv(datain, template_path="cvtemplate.tex", output_path="cv.tex"):
