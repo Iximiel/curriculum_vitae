@@ -1,0 +1,13 @@
+.python-version
+*.aux
+*.log
+*.fdb_latexmk
+*.fls
+*.out
+*.pdf
+*.bbl
+cv.tex
+private.json
+__pycache__/
+moderncv/
+

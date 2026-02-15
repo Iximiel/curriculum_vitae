@@ -1,0 +1,149 @@
+% Loosely based on "Modello di curriculum vitae di Lorenzo Pantieri © versione: 26 settembre 2012
+
+\documentclass[11pt,a4paper,sans]{moderncv}
+\ifxetexorluatex
+  \usepackage{fontspec}
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Ligatures=TeX}
+  \setmainfont{Latin Modern Roman}
+  \setsansfont{Latin Modern Sans}
+  \setmonofont{Latin Modern Mono}
+  \setmathfont{Latin Modern Math}
+
+  % you may also consider Fira Sans Light for a extra modern look
+  %\setsansfont[ItalicFont={Fira Sans Light Italic},%
+  %           BoldFont={Fira Sans},%
+  %           BoldItalicFont={Fira Sans Italic}]%
+  %           {Fira Sans Light}%
+\else
+  \usepackage[utf8]{inputenc}
+  \usepackage[T1]{fontenc}
+  \usepackage{lmodern}
+\fi
+\usepackage[italian]{babel}
+
+%color must be looaded BEFORE the style
+\moderncvcolor{cerulean}
+\moderncvstyle[]{contemporary}% casual classic banking oldstyle fancy contemporary
+\usepackage [ hmargin =0.5in , vmargin =10 pt]{ geometry }
+
+%Cpp fancy
+%https://isocpp.org/wiki/faq/misc-environmental-issues#latex-macros
+\newcommand{\CC}{C\nolinebreak\hspace{-.05em}\raisebox{.4ex}{\tiny +}\nolinebreak\hspace{-.10em}\raisebox{.4ex}{\tiny +}}
+
+\newcommand{\BHpp}{BH\nolinebreak\hspace{-.05em}\raisebox{.4ex}{\tiny +}\nolinebreak\hspace{-.10em}\raisebox{.4ex}{\tiny +}}
+
+%\nopagenumbers{} 
+%\usepackage{lastpage}
+%\rfoot{\addressfont\itshape\textcolor{gray}{Page \thepage\ of \pageref{LastPage}}}
+
+\setlength{\hintscolumnwidth}{4cm}
+
+%\setlength{\makecvtitlenamewidth}{10cm}
+\firstname{Daniele}
+\familyname{Rapetti}
+\born{16 Maggio 1991}
+%\title{Curriculum vitae et studiorum}
+
+\address{<<address>>}{<<address_country>>}
+
+\mobile{<<mobile>>}
+
+\email{iximiel@gmail.com}
+
+%\homepage{}
+
+\social[github]{Iximiel}
+\social[linkedin]{daniele-rapetti}
+\social[orcid]{0000-0002-7193-5220}
+
+\photo[90pt][0.4pt]{Photo} 
+
+%\quote{}
+
+
+\begin{document}
+
+\makecvtitle
+
+<% if presentazione %>
+
+\section{<<presentationSection>>}
+<< presentazione >>
+<% endif %>
+<% if digital_skills %>
+
+\section{<<digitalSkillsSection>>}
+ <% for skill in digital_skills %>
+\cvitem{ << skill >> }{ << digital_skills[skill] >> }
+ <% endfor %>
+<% endif %>
+<% if work_experience %>
+
+\section{<<workExperienceSection>>}
+ <% for exp in work_experience%>
+ << exp >>
+ <% endfor %>
+<% endif %>
+<% if education %>
+
+\section{<<educationSection>>}
+ <% for exp in education%>
+ << exp >>
+ <% endfor %>
+<% endif %>
+<% if work_interests %>
+
+\section{<<interestsSection>>}
+<% endif %>
+<% if extra_education %>
+
+\section{<<schoolSection>>}
+<% endif %>
+<% if conferences %>
+
+\section{<<conferencesSection>>}
+ 
+ <% for conf in conferences%>
+ << conf >>
+ <% endfor %>
+<% endif %>
+<% if languages %>
+
+\section{<<languagesSection>>}
+
+<< languages >>
+<% endif %>
+<% if soft_skills %>
+
+\section{Soft Skills}
+<% endif %>
+<% if bibliography %>
+\renewcommand{\refname}{<<publicationSection>>}
+
+\nocite{*}
+
+\bibliographystyle{mycv}
+
+\bibliography{publications}
+<% endif %>
+
+<% if references %>
+\section{<<referencesSection>>}
+
+<% endif %>
+
+<% if privacy_disclaimer %>
+
+\vfill
+\begin{center}
+\textit {\small Autorizzo il trattamento dei miei dati personali presenti nel CV ai sensi dell’art. 13 d. lgs. 30 giugno 2003 n. 196 - “Codice in materia di
+protezione dei dati personali” e dell’art. 13 GDPR 679/16 - “Regolamento europeo sulla protezione dei dati personali”.}
+\end{center}
+
+<% endif %>
+
+
+\end{document}
+
+
