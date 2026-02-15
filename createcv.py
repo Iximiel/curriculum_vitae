@@ -22,10 +22,16 @@ presentation = Presentation(
 
 Il mio ruolo attuale è convincere parte del codice di PLUMED a funzionare su una GPU. In passato ho scritto programmi scientifici per i laboratori in cui ho studiato/lavorato e sono sempre stato attento a lasciare un codice ben documentato e facile da usare per i futuri colleghi.
 
-
 In un certo senso il mio lavoro è sempre stato lavorare con interfacce o di "traduzione":
 
-ho portato da Fortran a C++ un codice di ottimizzazione globale, che poi ho interfacciato con QuantumEspresso; ho cercato di fittare un potenziale di interazione tra Au e S; ho interfacciato dottorandi con codici scientifici; ho aiutato a migliorare un interfaccia tra PLUMED e Python e adesso ne sto scrivendo una tra PLUMED e GPU.
+ - La fisica come scienza cerca di mettere in comunicazione uomo e natura, usando la matematica come linguaggio
+ - ho portato da Fortran a C++ un codice di ottimizzazione globale, che poi ho interfacciato con QuantumEspresso
+ - ho cercato di fittare un potenziale di interazione tra Au e S
+ - ho interfacciato dottorandi (che in genere non leggono mai manuali) con codici scientifici
+ - ho aiutato a migliorare un interfaccia tra PLUMED e Python
+ - sto "portando" parte del codice di PLUMED su GPU.
+
+Sono principalmente uno sviluppatore C++, ho un rapporto "interessato" con Python. E so impostare script in bash anche abbastanza complessi. So muovermi in progetti che si compilano passando per CMake o GNUAutotools.
 """,
         eng="""I am a Physicist by education, software developer/engineer by vocation.
 
@@ -40,7 +46,7 @@ My job was always in translating or in interfaces:
  - Now I am translating part of the PLUMED code to run it on the GPU
  - I also helped make it possible to call a Python script with an embedded (in PLUMED) Python interpreter by a PLUMED instance that runs within a Python interpreter
 
-I am primarily a C++ developer, I have a love-hate relationship with Python, and I do like setting up bash scripts (I can use arrays!). I am familiar with CMake and with writing Makefiles, and I also have the basis to interact with Autotools.
+I am primarily a C++ developer, I have a love-hate relationship with Python, and I do like setting up bash scripts (I can use arrays!). I am familiar with CMake and with writing Makefiles, and I also have the basis to interact with GNUAutotools.
 """,
     )
 )
