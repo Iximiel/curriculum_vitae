@@ -332,6 +332,14 @@ languages = Languages(
 
 
 if __name__ == "__main__":
+    from sys import argv
+
+    lang = "ita"
+    if len(argv) > 1:
+        lang = argv[1]
+
+    set_language(lang)
+
     # Example data to populate the CV
     with open("private.json", "r") as pf:
         import json
@@ -378,6 +386,8 @@ if __name__ == "__main__":
         ],
         "privacy_disclaimer": "yes",
     }
-    set_language("ita")
-    # set_language("eng")
-    create_cv(cv_data)
+    create_cv(
+        cv_data,
+        template="cvtemplate.tex",
+        output=f"cv_{lang}.tex",
+    )

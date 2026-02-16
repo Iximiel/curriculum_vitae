@@ -343,7 +343,7 @@ class Presentation:
         return beautifyCpp(latexify(self.presentation))
 
 
-def create_cv(datain, template_path="cvtemplate.tex", output_path="cv.tex"):
+def create_cv(datain, template="cvtemplate.tex", output="cv.tex"):
     """
     Generate a LaTeX CV by rendering a Jinja2-powered template with structured data.
 
@@ -433,7 +433,7 @@ def create_cv(datain, template_path="cvtemplate.tex", output_path="cv.tex"):
     """
 
     # Load the LaTeX template
-    with open(template_path, "r") as file:
+    with open(template, "r") as file:
         template_content = file.read()
     env = jinja2.Environment(
         block_start_string="<%",
@@ -476,5 +476,5 @@ def create_cv(datain, template_path="cvtemplate.tex", output_path="cv.tex"):
     )
 
     # Write the rendered content to the output file
-    with open(output_path, "w") as file:
+    with open(output, "w") as file:
         file.write(rendered_content)
