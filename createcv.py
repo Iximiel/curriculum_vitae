@@ -344,17 +344,20 @@ if __name__ == "__main__":
     with open("private.json", "r") as pf:
         import json
 
-        data = json.load(pf)
-        assert "address" in data, '"address" should be in "private.json"'
-        assert "address_country" in data, (
+        private = json.load(pf)
+        assert "address" in private, '"address" should be in "private.json"'
+        assert "address_country" in private, (
             '"address_country" should be in "private.json"'
         )
-        assert "mobile" in data, '"mobile" should be in "private.json"'
+        assert "mobile" in private, '"mobile" should be in "private.json"'
     cv_data = {
         # am not using update here to be sure that
-        "address": data["address"],
-        "address_country": data["address_country"],
-        "mobile": data["mobile"],
+        "address": private["address"],
+        "address_country": private["address_country"],
+        "mobile": private["mobile"],
+        # You can choose the photo from here, no need for adding the extension
+        "photo": "Photo_small",
+        # "photo": "Photo",
         # custom data:
         "presentazione": presentation,
         "work_experience": [
