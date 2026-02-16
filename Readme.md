@@ -7,3 +7,10 @@ But I recomend to run the `texlive-install.sh` script,and install the python pac
 You will need to have pandas installed, or to adapt the `texlive-install.sh` script to your package manager (it is currently aimed at running on ubuntu with `apt`)
 (Or more simply dowload the cv from the release that I setup)
 
+---
+
+###### Note:
+
+I have included the modercv package as a subfolder with its License.
+I do not own moderncv. I included it to avoid compatibility problems, my photo occupies more space, so, spacewise should not be a problem.
+

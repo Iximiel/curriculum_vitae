@@ -5,7 +5,3 @@ sudo apt install -y latexmk \
   texlive-lang-italian \
   texlive-luatex \
   cm-super
-
-wget https://mirrors.ctan.org/macros/latex/contrib/moderncv.zip
-unzip moderncv.zip
-
