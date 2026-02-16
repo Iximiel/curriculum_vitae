@@ -1,5 +1,5 @@
 from cvcompiler import (
-    education,
+    Education,
     workExperience,
     create_cv,
     Translate,
@@ -119,7 +119,7 @@ postDocInGenova = workExperience(
     ),
 )
 ###EDUCATION (Titles)
-phd = education(
+phd = Education(
     "Ph.D. in Material Science",
     "31/10/2017",
     "31/12/2020",
@@ -146,7 +146,7 @@ phd = education(
 """,
     ),
 )
-masterthesis = education(
+masterthesis = Education(
     "Laurea Magistrale",
     "2012",
     "25/10/2017",
@@ -170,7 +170,7 @@ masterthesis = education(
 """,
     ),
 )
-bachelor = education(
+bachelor = Education(
     "Laurea Triennale",
     "2009",
     "25/03/2014",
@@ -228,7 +228,11 @@ software = SkillSet(
     Skill("Github, Github actions", emph=True),
     Skill("gnuplot"),
 )
-IDEs = SkillSet("IDE e editor testuali", Skill("vscode"), Skill("Neovim"))
+IDEs = SkillSet(
+    "IDE e editor testuali",
+    Skill("vscode"),
+    Skill("Neovim"),
+)
 
 
 # conferences

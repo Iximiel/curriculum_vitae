@@ -1,6 +1,6 @@
 import jinja2
 from dataclasses import dataclass, field
-from typing import List, Union
+from typing import List, Union, Optional
 import re
 import pandoc
 from collections.abc import Iterable
@@ -41,7 +41,6 @@ class Translate:
     eng: str
 
     def __str__(self) -> str:
-        global LANGUAGE
         match LANGUAGE:
             case "ita":
                 return self.ita
@@ -117,31 +116,39 @@ class CVEntry:
         )
 
 
-def education(
-    degree: str,
-    date_start: str,
-    date_end: str,
-    institution: str,
-    city: str,
-    grade: str,
-    title: str,
-    eqf: int,
-    field: str,
-    description: str | Translate = None,
-):
-    desc = f"**EQF**: {eqf} **{Translate(ita='Campo', eng='Field')}**: _{field}_ \n\n"
-    desc += rf"**{Translate(ita='Titolo', eng='Title')}**: _{title}_" "\n"
-    if description:
-        desc += "\n" + str(description)
-    return CVEntry(
-        date_start,
-        date_end,
-        degree,
-        institution,
-        city,
-        grade,
-        desc,
-    )
+@dataclass
+class Education:
+    degree: str
+    date_start: str
+    date_end: str
+    institution: str
+    city: str
+    grade: str
+    title: str
+    eqf: int
+    field: str
+    description: Optional[str | Translate] = None
+
+    def __str__(self):
+        # made this a function to ensure that the str method is postponed
+        # at the time of running the jinja template
+        print(f"{LANGUAGE=}")
+        desc = f"**EQF**: {self.eqf} **{Translate(ita='Campo', eng='Field')}**: _{self.field}_ \n\n"
+        desc += rf"**{Translate(ita='Titolo', eng='Title')}**: _{self.title}_" "\n"
+        if self.description:
+            desc += "\n" + str(self.description)
+
+        return str(
+            CVEntry(
+                self.date_start,
+                self.date_end,
+                self.degree,
+                self.institution,
+                self.city,
+                self.grade,
+                desc,
+            )
+        )
 
 
 def workExperience(
