@@ -46,7 +46,7 @@ My job was always in translating or in interfaces:
  - Now I am translating part of the PLUMED code to run it on the GPU
  - I also helped make it possible to call a Python script with an embedded (in PLUMED) Python interpreter by a PLUMED instance that runs within a Python interpreter
 
-I am primarily a C++ developer, I have a love-hate relationship with Python, and I do like setting up bash scripts (I can use arrays!). I am familiar with CMake and with writing Makefiles, and I also have the basis to interact with GNUAutotools.
+I am primarily a **C++** developer, I have a *love-hate* relationship with **Python**, and I do like setting up bash scripts (I can use arrays!). I am familiar with CMake and with writing Makefiles, and I also have the basis to interact with GNUAutotools.
 """,
     )
 )
@@ -100,7 +100,7 @@ postDocInTurin = workExperience(
     ),
 )
 postDocInGenova = workExperience(
-    "Borsa DR",
+    Translate("Borsa DR", "Borsa DR [research grant]"),
     "01/02/2021",
     "31/07/2021",
     employer="Università degli studi di Genova",
@@ -126,7 +126,7 @@ phd = Education(
     "Università degli studi di Genova",
     "Genova, Italia",  # | Campi di studio: Scienza dei Materiali | Livello EQF: Livello 8 EQF | Tesi:
     grade=None,
-    field="Scienza dei Materiali",
+    field=Translate("Scienza dei Materiali", "Materials Science"),
     eqf=8,
     title=Translate(
         ita=r"Computational approaches to the study of the electronic properties, structure and functionalization of metal nanoparticles [Approcci computazionali allo studio delle proprietà elettroniche, della struttura e della funzionalizzazione di nanoparticelle metalliche.]",
@@ -177,7 +177,7 @@ bachelor = Education(
     "Università degli studi di Genova",
     "Genova, Italia",
     grade="102/110",
-    field="Fisica Sperimentale",
+    field=Translate("Fisica Sperimentale", "Experimental Physics"),
     eqf=6,
     title=Translate(
         ita="L'effetto tunnel e il decadimento alfa",
