@@ -35,7 +35,8 @@ def set_language(language: str):
             raise ValueError(f"language {language} is not supported")
 
 
-@dataclass
+# to future me: frozen=True make this hashable
+@dataclass(frozen=True)
 class Translate:
     ita: str
     eng: str
