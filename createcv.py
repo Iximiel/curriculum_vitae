@@ -1,5 +1,6 @@
 from cvcompiler import (
     Education,
+    set_slim_education,
     workExperience,
     create_cv,
     Translate,
@@ -47,7 +48,7 @@ My job was always in translating or in interfaces:
  - Now I am translating part of the PLUMED code to run it on the GPU
  - I also helped make it possible to call a Python script with an embedded (in PLUMED) Python interpreter by a PLUMED instance that runs within a Python interpreter
 
-I am primarily a **C++** developer, I have a *love-hate* relationship with **Python**, and I do like setting up bash scripts (I can use arrays!). I am familiar with CMake and with writing Makefiles, and I also have the basis to interact with GNUAutotools.
+I am primarily a **C++** developer, I have a *love-hate* relationship with Python, and I do like setting up bash scripts (I can use arrays!). I am familiar with CMake and with writing Makefiles, and I also have the basis to interact with GNUAutotools.
 """,
     )
 )
@@ -64,15 +65,15 @@ plumedDeveloper = workExperience(
     city="Trieste, Italia",
     description=Translate(
         ita=r""" -  Manutenzione e miglioramento del programma open source PLUMED (**C++**, **GNU autotools**, **Python**, **GitHub Workflows**)
- -  Manutenzione integrazione continua e test (**GitHub Workflows**)
- -  Contributo ad interfaccia PLUMED-Python (**pybind11**, **pip**, **CMake**, **scikit\_build\_core**)
+ -  Manutenzione integrazione continua e test (GitHub Workflows)
+ -  Contributo ad interfaccia PLUMED-Python (pybind11, pip, **CMake**, scikit\_build\_core)
  -  Accelerazione di alcune componenti di PLUMED con GPU (**CUDA**, **openACC**).
  -  Manutenzione siti di supporto per PLUMED (**Python**, **GitHub Workflows**, Markdown)""",
         eng=""" - Maintenance and developing of the open source program PLUMED (C++, GNU autotools, Python, GitHub Workflows)
- - Maintenance CI and tests (**GitHub Workflows**)
- - Contribution to the PLUMED-Python interface (**pybind11**, **pip**, **CMake**, **scikit\_build\_core**)
+ - Maintenance CI and tests (GitHub Workflows)
+ - Contribution to the PLUMED-Python interface (pybind11, pip, **CMake**, scikit\_build\_core)
  - Acceleration of some components in PLUMED con GPU (**CUDA**, **openACC**).
- - Maintenance of support sites for PLUMED (**Python**, **GitHub Workflows**, Markdown)""",
+ - Maintenance of support sites for PLUMED (Python, **GitHub Workflows**, Markdown)""",
     ),
 )
 postDocInTurin = workExperience(
@@ -83,20 +84,16 @@ postDocInTurin = workExperience(
     city="Torino, Italia",
     description=Translate(
         ita=r""" -  Simulazione e analisi traiettorie di nanoparticelle metalliche
- -  Gestione risorse computazionali interne al laboratorio
- -  Manutenzione programmi interni al laboratorio (**Bash** , **Python 3**).
-
-**In particolare ho imparato a gestire un pacchetto python su GitHub e a pubblicarlo su PyPI tramite GitHub workflow**
-
-**Ho anche iniziato ad applicare tecniche di integrazione continua** (test e validazione di codice)
+ - Gestione risorse computazionali interne al laboratorio
+ - Manutenzione programmi interni al laboratorio (**Bash** , Python 3).
+ - Gestione di un pacchetto python su GitHub e distribuzione su PyPI tramite GitHub workflow
+ - CI/CD
 """,
         eng=r""" - Simulation and trajectory analysis of metallic nanoparticles
  - Maintenance and software organization of computational resources of the laboratory
  - Maintenance internal software tools (Bash , Python 3).
-
-**In particular I learned setting up and maintainig a python package on GitHub, and to publish it on PyPi via a GitHub workflow.**
-
-**I also started using and mastering the CI/CD workflow for testing and validating the code.**
+ - Mintenance and distribuition on PyPi of a python package via GitHub workflow
+ - CI/CD
 """,
     ),
 )
@@ -115,10 +112,32 @@ postDocInGenova = workExperience(
         eng="""Finalization of my doctorate work:
 
  - Developing an atomistic interaction potenzial between sulphur in thiols and gold sufaces from data generated with DFT (Density Functional Theory) calculations.
- - Mainteinance of internal tools (**C++**, Bash , Python 2.7 e 3)
+ - Mainteinance of internal tools (**C++**, Bash , Python 2.7 and 3)
 """,
     ),
 )
+
+education_experience = workExperience(
+    Translate("PhD", "PhD"),
+    "31/10/2017",
+    "31/12/2020",
+    employer="Università degli studi di Genova",
+    city="Genova, Italia",
+    description=Translate(
+        ita=r""" -  Definizione e studio potenziale atomistico di interazione tra zolfo in tioli e superfici di oro a partire da calcoli e dati DFT (Density Functional Theory).
+ - Scrittura programma di best fit in C++ e OpenCL utilizzando l’algoritmo Particle Swarm Optimization
+ - Implementazione del potenziale Au-S in LAMMPS.
+ - Manutenzione programmi interni al laboratorio (**C++**, Bash , Python 2.7 e 3).
+""",
+        eng=r""" -  Definition and study of an atomistic interaction potential between the sulphur in a thiolate and golden surfaces, starting from data and calculations made with the DFT (Density Functional Theory).
+ - I wrote a best fit program in **C++** and **OpenCL** using the Particle Swarm Optimization algorithm
+ - I implemented the Au-S potenzial in LAMMPS
+ - I contributed to the minteinance of the internal lab programs (**C++**, Bash , Python 2.7 e 3).
+
+""",
+    ),
+)
+
 ###EDUCATION (Titles)
 phd = Education(
     "Ph.D. in Material Science",
@@ -153,7 +172,7 @@ masterthesis = Education(
     "25/10/2017",
     "Università degli studi di Genova",
     "Genova, Italia",
-    field="Fisica della Materia",
+    field=Translate("Fisica della Materia", "Solid State Physics"),
     grade="109/110",
     eqf=7,
     title=Translate(
@@ -196,6 +215,7 @@ crosslanguage = SkillSet(
     Skill("Design patterns"),
     Skill("OpenACC"),
     Skill("OpenMP"),
+    Skill("MPI"),
     Skill("Functional Programming"),
 )
 computerLanguages = SkillSet(
@@ -209,7 +229,7 @@ computerLanguages = SkillSet(
     Skill("Javascript"),
 )
 scientificSoftware = SkillSet(
-    "Software scientifici",
+    Translate("Software scientifici", "Scientific Softwares"),
     Skill("CP2K"),
     Skill("LAMMPS"),
     Skill("Quantum ESPRESSO"),
@@ -219,10 +239,12 @@ scientificSoftware = SkillSet(
 )
 software = SkillSet(
     "Software",
-    Skill("Microsoft Office"),
-    Skill("Open Office"),
+    # Skill("Microsoft Office"),
+    # Skill("Open Office"),
+    Skill("GNU/Linux"),
+    Skill("GNU/Core Utilities"),
     Skill("make"),
-    Skill("GNU Autotools"),
+    Skill("GNU/Autotools"),
     Skill("CMake"),
     Skill("Git"),
     Skill("enviroment modules"),
@@ -230,7 +252,7 @@ software = SkillSet(
     Skill("gnuplot"),
 )
 IDEs = SkillSet(
-    "IDE e editor testuali",
+    Translate("IDE e editor testuali", "IDE and text editors"),
     Skill("vscode"),
     Skill("Neovim"),
 )
@@ -344,6 +366,7 @@ if __name__ == "__main__":
         lang = argv[1]
 
     set_language(lang)
+    set_slim_education(True)
 
     # Example data to populate the CV
     with open("private.json", "r") as pf:
@@ -369,11 +392,12 @@ if __name__ == "__main__":
             plumedDeveloper,
             postDocInTurin,
             postDocInGenova,
+            education_experience,
         ],
         "education": [
             phd,
-            masterthesis,
-            bachelor,
+            # masterthesis,
+            # bachelor,
         ],
         "digital_skills": skillDict(
             crosslanguage,
@@ -383,15 +407,15 @@ if __name__ == "__main__":
             IDEs,
         ),
         "languages": languages,
-        "bibliography": "yes",
-        "conferences": [
-            icsc25,
-            acbd19,
-            grc19,
-            grs19,
-            imn19,
-            imn18,
-        ],
+        # "bibliography": "yes",
+        # "conferences": [
+        # icsc25,
+        # acbd19,
+        # grc19,
+        # grs19,
+        # imn19,
+        # imn18,
+        # ],
         "privacy_disclaimer": "yes",
     }
     if "cover_letter" in private:

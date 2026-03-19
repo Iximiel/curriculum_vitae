@@ -35,6 +35,18 @@ def set_language(language: str):
             raise ValueError(f"language {language} is not supported")
 
 
+SLIM_EDUCATION: bool = False
+
+
+def set_slim_education(toggle: bool):
+    global SLIM_EDUCATION
+    # wy not SLIM_EDUCATION=toggle? -> I want to be sure that SLIM_EDUCATION is boolean in this funny word of duck typing
+    if toggle:
+        SLIM_EDUCATION = True
+    else:
+        SLIM_EDUCATION = False
+
+
 # to future me: frozen=True make this hashable
 @dataclass(frozen=True)
 class Translate:
@@ -136,7 +148,7 @@ class Education:
         print(f"{LANGUAGE=}")
         desc = f"**EQF**: {self.eqf} **{Translate(ita='Campo', eng='Field')}**: _{self.field}_ \n\n"
         desc += rf"**{Translate(ita='Titolo', eng='Title')}**: _{self.title}_" "\n"
-        if self.description:
+        if self.description and not SLIM_EDUCATION:
             desc += "\n" + str(self.description)
 
         return str(
