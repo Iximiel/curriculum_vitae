@@ -12,7 +12,7 @@ eng: cv_eng.pdf
 	latexmk -interaction=nonstopmode $<
 	@latexmk -c $<
 
-cv_ita.tex: createcv.py cvtemplate.tex private.json cvcompiler.py
+cv_ita.tex: createcv.py cvtemplate.tex private.json cvcompiler.py cv-alta-template.tex
 	python createcv.py ita
 
 cv_eng.tex: createcv.py cvtemplate.tex private.json cvcompiler.py

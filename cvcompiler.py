@@ -1,4 +1,5 @@
 import jinja2
+from enum import Enum
 from dataclasses import dataclass, field
 from typing import List, Union, Optional
 import re
@@ -45,6 +46,26 @@ def set_slim_education(toggle: bool):
         SLIM_EDUCATION = True
     else:
         SLIM_EDUCATION = False
+
+
+class CVType(Enum):
+    MODERN = 0
+    ALTA = 1
+
+
+CVTYPE = CVType.MODERN
+
+
+def set_template_type(templatename: str):
+    global CVTYPE
+
+    match templatename.lower():
+        case "modern":
+            CVTYPE = CVType.MODERN
+        case "alta":
+            CVTYPE = CVType.ALTA
+        case _:
+            raise ValueError(f"Unknown document type: {templatename}")
 
 
 # to future me: frozen=True make this hashable
@@ -130,6 +151,52 @@ class CVEntry:
 
 
 @dataclass
+class CVEvent:
+    date_start: str
+    date_end: str
+    job_title: str
+    employer: str
+    city: str = field(default_factory=str)
+    description: str = field(default_factory=str)
+
+    def __post_init__(self):
+        self.city = self.city or ""
+
+        for name, value in [
+            ("date_start", self.date_start),
+            ("date_end", self.date_end),
+            ("job_title", self.job_title),
+            ("employer", self.employer),
+        ]:
+            if value is None:
+                raise ValueError(f"'{name}' can't be None.")
+            if (
+                name in {"date_start", "job_title", "employer"}
+                and str(value).strip() == ""
+            ):
+                raise ValueError(f"'{name}' can't be empty.")
+
+    def __str__(self) -> str:
+        # Costruisce la stringa LaTeX con escape dei caratteri speciali
+        date_range = f"{self.date_start} - {self.date_end}"
+
+        desc = (
+            beautifyCpp(latexify(self.description))
+            .replace("\n\n", r"\newline{}")
+            # this avoids error with a newline after the end of the itemize
+            .replace(r"\end{itemize}\newline{}", r"\end{itemize}")
+        )
+        # Hipster:
+        return (
+            rf"\cvevent{{{self.job_title}}}"
+            f"{{{self.employer}}}"
+            f"{{{date_range}}}"
+            f"{{{self.city}}}"
+            f"\n{desc}"
+        )
+
+
+@dataclass
 class Education:
     degree: str
     date_start: str
@@ -143,44 +210,75 @@ class Education:
     description: Optional[str | Translate] = None
 
     def __str__(self):
-        # made this a function to ensure that the str method is postponed
-        # at the time of running the jinja template
-        print(f"{LANGUAGE=}")
-        desc = f"**EQF**: {self.eqf} **{Translate(ita='Campo', eng='Field')}**: _{self.field}_ \n\n"
-        desc += rf"**{Translate(ita='Titolo', eng='Title')}**: _{self.title}_" "\n"
-        if self.description and not SLIM_EDUCATION:
-            desc += "\n" + str(self.description)
+        match CVTYPE:
+            case CVType.MODERN:
+                # made this a function to ensure that the str method is postponed
+                # at the time of running the jinja template
+                desc = f"**EQF**: {self.eqf} **{Translate(ita='Campo', eng='Field')}**: _{self.field}_ \n\n"
+                desc += (
+                    rf"**{Translate(ita='Titolo', eng='Title')}**: _{self.title}_" "\n"
+                )
+                if self.description and not SLIM_EDUCATION:
+                    desc += "\n" + str(self.description)
 
-        return str(
-            CVEntry(
-                self.date_start,
-                self.date_end,
-                self.degree,
-                self.institution,
-                self.city,
-                self.grade,
-                desc,
-            )
-        )
+                return str(
+                    CVEntry(
+                        self.date_start,
+                        self.date_end,
+                        self.degree,
+                        self.institution,
+                        self.city,
+                        self.grade,
+                        desc,
+                    )
+                )
+            case CVType.ALTA:
+                return str(
+                    CVEvent(
+                        self.date_start,
+                        self.date_end,
+                        self.degree,
+                        self.institution,
+                        self.city,
+                        self.title,
+                    )
+                )
 
 
-def workExperience(
-    title: str,
-    date_start: str,
-    date_end: str,
-    employer: str,
-    city: str = None,
-    description: str | Translate = None,
-):
-    return CVEntry(
-        date_start,
-        date_end,
-        title,
-        employer,
-        city,
-        None,
-        description,
-    )
+@dataclass()
+class WorkExperience:
+    title: str
+    date_start: str
+    date_end: str
+    employer: str
+    city: str = None
+    description: str | Translate = None
+
+    def __str__(self):
+        match CVTYPE:
+            case CVType.MODERN:
+                return str(
+                    CVEntry(
+                        self.date_start,
+                        self.date_end,
+                        self.title,
+                        self.employer,
+                        self.city,
+                        None,
+                        self.description,
+                    )
+                )
+            case CVType.ALTA:
+                return str(
+                    CVEvent(
+                        self.date_start,
+                        self.date_end,
+                        self.title,
+                        self.employer,
+                        self.city,
+                        self.description,
+                    )
+                )
 
 
 # Skills
@@ -303,6 +401,7 @@ class Language:
     writing: str
     spoken_production: str
     spoken_interaction: str
+    overall_of_five: float
 
 
 @dataclass
@@ -313,44 +412,60 @@ class Languages:
 
     def __str__(self):
         toret = ""
-        title = Translate(ita="Lingua madre:", eng="Mother tongue:")
-        for mt in iterate(self.mother_tongues):
-            toret += rf"\cvitemwithcomment{{{title}:}}{{{mt}}}{{}}"
-            toret += "\n"
-            title = ""
-        title = Translate(ita="Altri linguaggi:", eng="Other languages:")
+        match CVTYPE:
+            case CVType.MODERN:
+                title = Translate(ita="Lingua madre:", eng="Mother tongue:")
+                for mt in iterate(self.mother_tongues):
+                    toret += rf"\cvitemwithcomment{{{title}:}}{{{mt}}}{{}}"
+                    toret += "\n"
+                    title = ""
+                title = Translate(ita="Altri linguaggi:", eng="Other languages:")
 
-        listening = Translate("Ascolto", "Listening")
-        reading = Translate("Lettura", "Reading")
-        writing = Translate("Scrittura", "Writing")
-        spoken_production = Translate("Produzione orale", "Spoken production")
-        spoken_interaction = Translate("Interazione orale", "Spoken interaction")
-        for ot in iterate(self.other_languages):
-            if type(ot) is Language:
-                toret += rf"\cvitemwithcomment{{{title}}}{{{ot.language}}}"
-                toret += (
-                    "{"
-                    + rf"{listening}~\textbf{{{ot.listening}}}~"
-                    + rf"{reading}~\textbf{{{ot.reading}}}~"
-                    + rf"{writing}~\textbf{{{ot.writing}}} "
-                    + rf"{spoken_production}~\textbf{{{ot.spoken_production}}}~"
-                    + rf"{spoken_interaction}~\textbf{{{ot.spoken_interaction}}}"
-                    + "}"
+                listening = Translate("Ascolto", "Listening")
+                reading = Translate("Lettura", "Reading")
+                writing = Translate("Scrittura", "Writing")
+                spoken_production = Translate("Produzione orale", "Spoken production")
+                spoken_interaction = Translate(
+                    "Interazione orale", "Spoken interaction"
                 )
+                for ot in iterate(self.other_languages):
+                    if type(ot) is Language:
+                        toret += rf"\cvitemwithcomment{{{title}}}{{{ot.language}}}"
+                        toret += (
+                            "{"
+                            + rf"{listening}~\textbf{{{ot.listening}}}~"
+                            + rf"{reading}~\textbf{{{ot.reading}}}~"
+                            + rf"{writing}~\textbf{{{ot.writing}}} "
+                            + rf"{spoken_production}~\textbf{{{ot.spoken_production}}}~"
+                            + rf"{spoken_interaction}~\textbf{{{ot.spoken_interaction}}}"
+                            + "}"
+                        )
 
-            else:
-                toret += rf"\cvitemwithcomment{{{title}}}{{{ot}}}{{}}"
-            toret += "\n"
-            title = ""
-        if self.showLegend:
-            toret += "\cvitemwithcomment{}{}{" + str(
-                Translate(
-                    ita="Livelli: A1 e A2: Livello elementare - B1 e B2: Livello intermedio - C1 e C2: Livello avanzato",
-                    eng="Levels: A1 and A2: Basic user - B1 and B2: Independent user - C1 and C2: Proficient user",
-                )
-            )
-            toret += "}"
+                    else:
+                        toret += rf"\cvitemwithcomment{{{title}}}{{{ot}}}{{}}"
+                    toret += "\n"
+                    title = ""
+                if self.showLegend:
+                    toret += "\cvitemwithcomment{}{}{" + str(
+                        Translate(
+                            ita="Livelli: A1 e A2: Livello elementare - B1 e B2: Livello intermedio - C1 e C2: Livello avanzato",
+                            eng="Levels: A1 and A2: Basic user - B1 and B2: Independent user - C1 and C2: Proficient user",
+                        )
+                    )
+                    toret += "}"
+            case CVType.ALTA:
+                for mt in iterate(self.mother_tongues):
+                    toret += rf"\cvskill{{{mt}}}{{5}}"
+                    toret += "\n"
 
+                for ot in iterate(self.other_languages):
+                    if type(ot) is Language:
+                        toret += rf"\cvskill{{{ot.language}}}{{{ot.overall_of_five}}}"
+                    else:
+                        toret += rf"\cvskill{{{ot}}}{{}}"
+                    toret += "\n"
+        # \divider
+        # \cvskill{German}{3.5} %% Supports X.5 values.
         return toret
 
 
