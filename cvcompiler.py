@@ -351,6 +351,59 @@ class Presentation:
         return beautifyCpp(latexify(self.presentation))
 
 
+def make_cover_letter(settings: dict):
+    # letter setup
+    for required in ["recipient", "recipient_address", "subject"]:
+        assert required in settings, (
+            f'a field callen "{required}" is required for the cover letter'
+        )
+    letter = (
+        rf"\recipient{{{settings['recipient']}}}{{{settings['recipient_address']}}}"
+        + "\n"
+    )
+    date = ""
+    if "date" in settings:
+        date = settings["date"]
+    else:
+        from datetime import datetime
+
+        d = datetime.now()
+        date = d.strftime("%d %B %Y")
+
+    letter += rf"\date{{{date}}}" + "\n"
+    letter += rf"\subject{{{settings['subject']}}}" + "\n"
+    opening = (
+        settings["opening"]
+        if "opening" in settings
+        else Translate(
+            ita="",
+            eng="Dear Sir or Madam",
+            # eng="To whom it may concern,"
+        )
+    )
+    letter += rf"\opening{{{opening}}}" + "\n"
+    closing = (
+        settings["closing"]
+        if "closing" in settings
+        else Translate(ita="Saluti,", eng="Yours faithfully,")
+    )
+    letter += rf"\closing{{{closing}}}" + "\n"
+    if "signature" in settings:
+        # optional, remove / comment the line if not wanted: first argument goes to \includegraphics > scale"
+        letter += rf"\signature{{0.9}}{{{settings['signature']}}}"
+    # % use an optional argument to use a string other than "Enclosure", or redefine \enclname"
+    # letter+=rf"%\enclosure[Attached]{{curriculum vit\ae{}}}
+    body = beautifyCpp(latexify(settings["body"]))
+    letter += rf"""
+\makelettertitle
+
+{body}
+
+\makeletterclosing
+"""
+    return letter
+
+
 def create_cv(datain, template="cvtemplate.tex", output="cv.tex"):
     """
     Generate a LaTeX CV by rendering a Jinja2-powered template with structured data.

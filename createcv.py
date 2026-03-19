@@ -13,6 +13,7 @@ from cvcompiler import (
     Languages,
     Language,
     set_language,
+    make_cover_letter,
 )
 
 presentation = Presentation(
@@ -393,6 +394,8 @@ if __name__ == "__main__":
         ],
         "privacy_disclaimer": "yes",
     }
+    if "cover_letter" in private:
+        cv_data["cover_letter"] = make_cover_letter(private["cover_letter"])
     create_cv(
         cv_data,
         template="cvtemplate.tex",
