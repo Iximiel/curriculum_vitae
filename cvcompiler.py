@@ -237,7 +237,7 @@ class Education:
                     CVEvent(
                         self.date_start,
                         self.date_end,
-                        self.degree,
+                        str(self.degree) + " - " + str(self.field),
                         self.institution,
                         self.city,
                         self.title,
@@ -252,6 +252,7 @@ class WorkExperience:
     date_end: str
     employer: str
     city: str = None
+    tags: list[str] = None
     description: str | Translate = None
 
     def __str__(self):
@@ -269,6 +270,11 @@ class WorkExperience:
                     )
                 )
             case CVType.ALTA:
+                desc = str(self.description)
+                if self.tags:
+                    desc += "\n\n"
+                    for tag in self.tags:
+                        desc += rf"\cvtag{{{tag}}}"
                 return str(
                     CVEvent(
                         self.date_start,
@@ -276,7 +282,7 @@ class WorkExperience:
                         self.title,
                         self.employer,
                         self.city,
-                        self.description,
+                        desc,
                     )
                 )
 
@@ -294,6 +300,7 @@ class Skill:
     description: str = ""
     emph: bool = False
     startCategory: bool = False  #: this is to be used in a skill matrix
+    logo: str = ""
 
     def __post_init__(self):
         match self.skill.lower():
@@ -304,14 +311,15 @@ class Skill:
                 self.skill = r"\LaTeX{}"
 
     def __str__(self) -> str:
-        if self.startCategory:
-            return (
-                rf"\cvskillentry*{{{self.skill}}}{{{self.level}}}{{{self.description}}}"
-            )
-        else:
-            return (
-                rf"\cvskillentry{{{self.skill}}}{{{self.level}}}{{{self.description}}}"
-            )
+        match CVTYPE:
+            case CVType.MODERN:
+                if self.startCategory:
+                    return rf"\cvskillentry*{{{self.skill}}}{{{self.level}}}{{{self.description}}}"
+                else:
+                    return rf"\cvskillentry{{{self.skill}}}{{{self.level}}}{{{self.description}}}"
+            case CVType.ALTA:
+                assert self.logo != ""
+                return rf"\cvachievement{{\fa{self.logo}}}{{{self.skill}}}{{{latexify(self.description)}}}"
 
 
 class SkillSet:
@@ -464,8 +472,6 @@ class Languages:
                     else:
                         toret += rf"\cvskill{{{ot}}}{{}}"
                     toret += "\n"
-        # \divider
-        # \cvskill{German}{3.5} %% Supports X.5 values.
         return toret
 
 

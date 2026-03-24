@@ -58,8 +58,8 @@
 
 %Cpp fancy
 %https://isocpp.org/wiki/faq/misc-environmental-issues#latex-macros
-\newcommand{\CC}{C\nolinebreak\hspace{-.05em}\raisebox{.4ex}{\tiny +}\nolinebreak\hspace{-.10em}\raisebox{.4ex}{\tiny +}}
-
+%\newcommand{\CC}{C\nolinebreak\hspace{-.05em}\raisebox{.4ex}{\tiny +}\nolinebreak\hspace{-.10em}\raisebox{.4ex}{\tiny +}}
+\newcommand{\CC}{C\nolinebreak\hspace{-.05em}\raisebox{.1ex}{\bf +}\nolinebreak\hspace{-.10em}\raisebox{.1ex}{\bf +}}
 \newcommand{\BHpp}{BH\nolinebreak\hspace{-.05em}\raisebox{.4ex}{\tiny +}\nolinebreak\hspace{-.10em}\raisebox{.4ex}{\tiny +}}
 % Change some fonts, if necessary
 \renewcommand{\namefont}{\Huge\rmfamily\bfseries}
@@ -168,10 +168,8 @@
 %% Specify your last name(s) and first name(s) as given in the .bib to automatically bold your own name in the publications list.
 %% One caveat: You need to write \bibnamedelima where there's a space in your name for this to work properly; or write \bibnamedelimi if you use initials in the .bib
 %% You can specify multiple names, especially if you have changed your name or if you need to highlight multiple authors.
-\mynames{Lim/Lian\bibnamedelima Tze,
-  Wong/Lian\bibnamedelima Tze,
-  Lim/Tracy,
-  Lim/L.\bibnamedelimi T.}
+\mynames{Daniele\bibnamedelima Rapetti,
+  Rapetti\bibnamedelimi D.}
 %% MAKE SURE THERE IS NO SPACE AFTER THE FINAL NAME IN YOUR \mynames LIST
 
 \nocite{*}
@@ -210,19 +208,16 @@
 
 %\cvachievement{\faHeartbeat}{Another achievement}{more details about it of course}
 
-\cvsection{Strengths}
+<% if soft_skills %>
 
-% Don't overuse these \cvtag boxes — they're just eye-candies and not essential. If something doesn't fit on a single line, it probably works better as part of an itemized list (probably inlined itemized list), or just as a comma-separated list of strengths.
-
-\cvtag{Problem-finder}
-\cvtag{A}\\
-\cvtag{}
-
-\divider\smallskip
-
-\cvtag{C++}
-\cvtag{Embedded Systems}\\
-\cvtag{Statistical Analysis}
+\cvsection{Skills}
+ <% for exp in soft_skills%>
+ <% if loop.index0 > 0 %>
+\divider
+ <% endif %>
+  << exp >>
+ <% endfor %>
+<% endif %>
 
 <% if languages %>
 

@@ -64,10 +64,22 @@ plumedDeveloper = WorkExperience(
     "ongoing",
     employer="Scuola Internazionale Superiore di Studi Avanzati (SISSA)",
     city="Trieste, Italia",
+    tags=[
+        "C++",
+        "git",
+        "GNU autotools",
+        "Python",
+        "GitHub Workflows",
+        "pybind11",
+        "CMake",
+        # "scikit\_build\_core",
+        "CUDA",
+        "openACC",
+        "Markdown",
+        "Bash",
+    ],
     description=Translate(
         ita=r"""
-**C++**, **GNU autotools**, **Python**, **GitHub Workflows** pybind11, pip, **CMake**, scikit\_build\_core, **CUDA**, **openACC**, Markdown
-
  -  Manutenzione e miglioramento di open source PLUMED 
  -  Manutenzione integrazione continua e test
  -  Contributo ad interfaccia PLUMED-Python
@@ -88,12 +100,12 @@ postDocInTurin = WorkExperience(
     "15/04/2023",
     employer="Politecnico di Torino",
     city="Torino, Italia",
+    tags=["Bash", "Python", "GitHub Workflows", "Data analysis", "Machine learning"],
     description=Translate(
         ita=r""" -  Simulazione e analisi traiettorie di nanoparticelle metalliche
  - Gestione risorse computazionali interne al laboratorio
- - Manutenzione programmi interni al laboratorio (**Bash** , Python 3).
- - Gestione e distribuzione di un pacchetto python con GitHub workflow
- - CI/CD
+ - Manutenzione programmi interni al laboratorio.
+ - Gestione e distribuzione di un pacchetto python
 """,
         eng=r""" - Simulation and trajectory analysis of metallic nanoparticles
  - Maintenance and software organization of computational resources of the laboratory
@@ -109,8 +121,9 @@ postDocInGenova = WorkExperience(
     "31/07/2021",
     employer="Università degli studi di Genova",
     city="Genova, Italia",
+    tags=["C++", "Bash", "Python"],
     description=Translate(
-        ita=r"Continuazione e finalizzazione del lavoro fatto durante il dottorato",
+        ita=r" - Finalizzazione dei progetti del dottorato",
         eng="""Finalization of my doctorate work:
 
  - Developing an atomistic interaction potenzial between sulphur in thiols and gold sufaces from data generated with DFT (Density Functional Theory) calculations.
@@ -125,11 +138,18 @@ education_experience = WorkExperience(
     "31/12/2020",
     employer="Università degli studi di Genova",
     city="Genova, Italia",
+    tags=[
+        "C++",
+        "Bash",
+        "Python",
+        "OpenCL",
+        "Global optimization",
+    ],
     description=Translate(
-        ita=r""" -  Definizione e studio potenziale atomistico di interazione tra zolfo in tioli e superfici di oro a partire da calcoli e dati DFT (Density Functional Theory).
- - Scrittura programma di best fit in C++ e OpenCL utilizzando l’algoritmo Particle Swarm Optimization
+        ita=r""" - Studio potenziale di interazione tra zolfo in tioli e superfici di oro a partire da calcoli DFT (Density Functional Theory).
+ - Ho implementatio su GPU l'algoritmo Particle Swarm Optimization come programma di best fit
  - Implementazione del potenziale Au-S in LAMMPS.
- - Manutenzione programmi interni al laboratorio (**C++**, Bash , Python 2.7 e 3).
+ - Manutenzione programmi interni al laboratorio.
 """,
         eng=r""" -  Definition and study of an atomistic interaction potential between the sulphur in a thiolate and golden surfaces, starting from data and calculations made with the DFT (Density Functional Theory).
  - I wrote a best fit program in **C++** and **OpenCL** using the Particle Swarm Optimization algorithm
@@ -264,6 +284,24 @@ IDEs = SkillSet(
     Skill("Neovim"),
 )
 
+
+soft_skills = [
+    Skill(
+        "Problem Finding",
+        description='L\'ottimizzazione ti lascia un certo "senso" per individuare situazioni e impostazioni  "interessanti"',
+        logo="Search",
+    ),
+    Skill(
+        "Apprendimento Continuo",
+        description="Tutti i ruoli che ho ricoperto hanno richiesto di imparare e patroneggiare tecniche e tecnologie nuove",
+        logo="Database",
+    ),
+    Skill(
+        "Flessibilità e cambiamento",
+        description='Quando arrivo in una città nuova, impiego poco tempo a trovare il modo di "orientarmi"',
+        logo="Water",
+    ),
+]
 
 # conferences
 icsc25 = Conference(
@@ -424,6 +462,7 @@ if __name__ == "__main__":
         # imn19,
         # imn18,
         # ],
+        "soft_skills": soft_skills,
         "privacy_disclaimer": "yes",
         "email": "iximiel@gmail.com",
         "birthday": Translate("16 Maggio 1991", "16 May 1991"),
